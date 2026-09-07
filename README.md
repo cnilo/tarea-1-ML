@@ -9,7 +9,10 @@ y el único dataset incluido en ese repositorio (Hangzhou, `Dataset/HZ`).
 ## Estructura
 
 ```
-PMC-GCN/          clon del repositorio oficial (sin modificar; commit 2023-10-26)
+README.md                       este archivo
+requirements.txt
+estado-del-arte-ml-metro.html   revisión bibliográfica que motivó la elección del paper
+PMC-GCN/                        clon del repositorio oficial (no incluido; ver instalación)
 repro/
   train_hz.py     entrenamiento + evaluación (réplica de New_train_batch_with_two_channel.py
                   y predict_batch_with_two_channel.py, configurado para HZ)
@@ -24,7 +27,7 @@ repro/
 ## Instalación y ejecución
 
 ```bash
-git clone https://github.com/cgao-comp/PMC-GCN.git        # junto a la carpeta repro/
+git clone https://github.com/cgao-comp/PMC-GCN.git        # en la raíz del repo, junto a repro/
 python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 
