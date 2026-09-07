@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Operación resiliente ante disrupciones · Estado del arte en ML para Metro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --anden:#E4E1D9;
+  --anden-2:#D5D1C6;
+  --tunel:#16181B;
+  --tinta:#22252A;
+  --gris:#6C7076;
+  --l1:#C8102E;
+  --l2:#EFAB00;
+  --l5:#00803C;
+  --l4:#0B4EA2;
+  --acento:var(--l4);
+  --u:clamp(11px,1.05vw,15px);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  background:var(--tunel);
+  color:var(--tinta);
+  font-family:"Source Serif 4",Georgia,serif;
+  overflow:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+.stage{position:fixed;inset:0;background:var(--anden);
+  background-image:
+    linear-gradient(rgba(0,0,0,.028) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,0,0,.028) 1px,transparent 1px);
+  background-size:52px 52px;
+}
+.slide{
+  position:absolute;inset:0;
+  display:none;
+  flex-direction:column;
+  justify-content:center;
+  padding:clamp(28px,5vw,84px) clamp(24px,6vw,110px) clamp(78px,9vh,110px);
+}
+.slide.on{display:flex;animation:enter .42s cubic-bezier(.2,.7,.3,1) both}
+@keyframes enter{from{opacity:0;transform:translateX(26px)}to{opacity:1;transform:none}}
+
+/* ---- tipografía ---- */
+.eyebrow{
+  font-family:"IBM Plex Mono",monospace;font-size:calc(var(--u)*.92);
+  letter-spacing:.19em;text-transform:uppercase;color:var(--gris);
+  display:flex;align-items:center;gap:.7em;margin-bottom:1.6em;
+}
+.eyebrow::before{content:"";width:26px;height:3px;background:var(--acento);flex:none}
+h1{font-family:"Archivo Black",sans-serif;font-weight:400;text-transform:uppercase;
+  font-size:clamp(34px,6.4vw,86px);line-height:.94;letter-spacing:-.022em;color:var(--tunel)}
+h2{font-family:"Archivo Black",sans-serif;font-weight:400;text-transform:uppercase;
+  font-size:clamp(24px,3.5vw,50px);line-height:1;letter-spacing:-.015em;color:var(--tunel)}
+h3{font-family:"Archivo Black",sans-serif;font-weight:400;text-transform:uppercase;
+  font-size:calc(var(--u)*1.02);letter-spacing:.13em;color:var(--gris)}
+p{font-size:calc(var(--u)*1.35);line-height:1.5;max-width:60ch}
+.lead{font-size:calc(var(--u)*1.62);line-height:1.42;max-width:52ch}
+.mono{font-family:"IBM Plex Mono",monospace}
+em.k{font-style:normal;background:linear-gradient(transparent 62%,rgba(239,171,0,.55) 62%)}
+
+/* ---- portada ---- */
+.cover-meta{display:flex;flex-wrap:wrap;gap:calc(var(--u)*2.2);margin-top:auto;
+  padding-top:calc(var(--u)*1.6);border-top:2px solid var(--tunel)}
+.cover-meta div{font-family:"IBM Plex Mono",monospace;font-size:calc(var(--u)*.9);
+  letter-spacing:.1em;text-transform:uppercase;color:var(--gris)}
+.cover-meta b{display:block;color:var(--tunel);font-weight:600;margin-top:.45em;letter-spacing:.04em}
+.cover h1{margin:.12em 0 .34em}
+.rule-lines{display:flex;height:9px;width:min(100%,560px);margin-bottom:calc(var(--u)*2)}
+.rule-lines i{flex:1}
+
+/* ---- grillas ---- */
+.two{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(24px,4vw,64px);align-items:start}
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,1.9vw,26px)}
+.stat{border-top:3px solid var(--tunel);padding-top:.7em}
+.stat b{display:block;font-family:"Archivo Black",sans-serif;font-weight:400;
+  font-size:clamp(26px,3.5vw,46px);line-height:1;color:var(--tunel)}
+.stat span{font-family:"IBM Plex Mono",monospace;font-size:calc(var(--u)*.85);
+  letter-spacing:.1em;text-transform:uppercase;color:var(--gris);display:block;margin-top:.6em}
+
+/* ---- cadena ---- */
+.chain{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(12px,1.6vw,22px);margin-top:calc(var(--u)*1.4)}
+.link{background:#fff;border-left:7px solid var(--c);padding:calc(var(--u)*1.25) calc(var(--u)*1.3);
+  box-shadow:0 1px 0 rgba(0,0,0,.16)}
+.link .n{font-family:"IBM Plex Mono",monospace;font-size:calc(var(--u)*.82);letter-spacing:.16em;
+  color:var(--c);text-transform:uppercase;font-weight:600}
+.link h4{font-family:"Archivo Black",sans-serif;font-weight:400;text-transform:uppercase;
+  font-size:calc(var(--u)*1.28);margin:.5em 0 .4em;letter-spacing:-.01em}
+.link p{font-size:calc(var(--u)*1.02);line-height:1.45;color:#4A4E54}
+
+/* ---- fichas de paper ---- */
+.paper-head{border-bottom:3px solid var(--c);padding-bottom:calc(var(--u)*1);margin-bottom:calc(var(--u)*1.3)}
+.paper-head .kicker{font-family:"IBM Plex Mono",monospace;font-size:calc(var(--u)*.85);
+  letter-spacing:.14em;text-transform:uppercase;color:var(--c);font-weight:600;margin-bottom:.6em}
+.paper-head h2{font-family:"Source Serif 4",Georgia,serif;font-weight:600;text-transform:none;
+  font-size:clamp(19px,2.35vw,33px);line-height:1.14;letter-spacing:-.005em;max-width:34ch}
+.paper-head .cite{font-family:"IBM Plex Mono",monospace;font-size:calc(var(--u)*.88);
+  color:var(--gris);letter-spacing:.05em;margin-top:.75em;line-height:1.5}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(12px,1.6vw,22px)}
+.card{border-top:3px solid var(--tunel);padding-top:.85em}
+.card.hl{border-top-color:var(--c)}
+.card h5{font-family:"IBM Plex Mono",monospace;font-size:calc(var(--u)*.85);letter-spacing:.15em;
+  text-transform:uppercase;color:var(--gris);margin-bottom:.75em;font-weight:600}
+.card p{font-size:calc(var(--u)*1.02);line-height:1.5}
+.card ul{list-style:none;font-size:calc(var(--u)*1.02);line-height:1.5}
+.card li{position:relative;padding-left:1.1em;margin-bottom:.55em}
+.card li::before{content:"";position:absolute;left:0;top:.62em;width:6px;height:6px;background:var(--c)}
+
+/* ---- divisor de arista ---- */
+.divider{justify-content:flex-end;background:var(--c);color:#fff}
+.divider.dark h2,.divider.dark .lead,.divider.dark .eyebrow{color:var(--tunel)}
+.divider h2{color:#fff;font-size:clamp(34px,7vw,96px)}
+.divider .lead{color:rgba(255,255,255,.9);margin-top:.7em}
+.divider .eyebrow{color:rgba(255,255,255,.75)}
+.divider .eyebrow::before{background:#fff}
+.divider.dark .eyebrow{color:rgba(0,0,0,.6)}
+.divider.dark .eyebrow::before{background:var(--tunel)}
+.divider .step{font-family:"Archivo Black",sans-serif;font-size:clamp(70px,15vw,190px);
+  line-height:.8;color:rgba(255,255,255,.22);margin-bottom:.06em}
+.divider.dark .step{color:rgba(0,0,0,.16)}
+
+/* ---- lazo ---- */
+.loop{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(10px,1.4vw,18px);align-items:stretch;margin-top:calc(var(--u)*1.2)}
+.node{background:var(--tunel);color:#fff;padding:calc(var(--u)*1.2);position:relative}
+.node b{font-family:"Archivo Black",sans-serif;font-weight:400;text-transform:uppercase;
+  display:block;font-size:calc(var(--u)*1.2);color:var(--c);margin-bottom:.5em}
+.node p{font-size:calc(var(--u)*.98);line-height:1.45;color:rgba(255,255,255,.82)}
+.node::after{content:"→";position:absolute;right:-1.05em;top:50%;transform:translateY(-50%);
+  font-family:"IBM Plex Mono",monospace;color:var(--gris);font-size:calc(var(--u)*1.4);z-index:2}
+.node:last-child::after{content:"↺";right:auto;left:50%;top:auto;bottom:-1.9em;transform:translateX(-50%)}
+
+/* ---- referencias ---- */
+.refs{columns:2;column-gap:clamp(24px,4vw,60px);font-size:calc(var(--u)*.95);line-height:1.5}
+.refs li{list-style:none;break-inside:avoid;margin-bottom:.85em;padding-left:2.3em;position:relative}
+.refs li span{position:absolute;left:0;top:.1em;font-family:"IBM Plex Mono",monospace;
+  font-size:calc(var(--u)*.8);color:var(--gris);font-weight:600}
+.refs li b{font-weight:600}
+.note{font-family:"IBM Plex Mono",monospace;font-size:calc(var(--u)*.82);color:var(--gris);
+  line-height:1.5;margin-top:calc(var(--u)*1.2);border-top:1px solid rgba(0,0,0,.18);padding-top:.9em;max-width:78ch}
+
+/* ---- barra de navegación tipo línea de metro ---- */
+.spine{position:fixed;left:clamp(24px,6vw,110px);right:clamp(24px,6vw,110px);
+  bottom:clamp(26px,4.2vh,44px);display:flex;align-items:center;gap:0;z-index:40}
+.spine .wire{position:absolute;left:0;right:0;top:50%;height:3px;background:rgba(0,0,0,.2);transform:translateY(-50%)}
+.stop{position:relative;flex:1;height:26px;border:0;background:none;cursor:pointer;padding:0}
+.stop i{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:9px;height:9px;border-radius:50%;background:rgba(0,0,0,.28);transition:all .25s}
+.stop:hover i{background:var(--tunel);transform:translate(-50%,-50%) scale(1.35)}
+.stop.now i{width:17px;height:17px;background:var(--sc);box-shadow:0 0 0 4px var(--anden),0 0 0 6px var(--sc)}
+.stop:focus-visible{outline:2px solid var(--l4);outline-offset:3px}
+.counter{position:fixed;right:clamp(24px,6vw,110px);top:clamp(22px,3.6vh,38px);
+  font-family:"IBM Plex Mono",monospace;font-size:calc(var(--u)*.88);letter-spacing:.12em;color:var(--gris);z-index:40}
+.counter b{color:var(--tunel);font-weight:600}
+.hint{position:fixed;left:clamp(24px,6vw,110px);top:clamp(22px,3.6vh,38px);
+  font-family:"IBM Plex Mono",monospace;font-size:calc(var(--u)*.78);letter-spacing:.12em;
+  color:var(--gris);text-transform:uppercase;z-index:40}
+
+@media (max-width:820px){
+  .two,.three,.chain,.cards,.loop{grid-template-columns:1fr}
+  .refs{columns:1}
+  .node::after{content:"↓";right:auto;left:50%;top:auto;bottom:-1.5em;transform:translateX(-50%)}
+  .hint{display:none}
+  .slide{padding-bottom:96px;justify-content:flex-start;padding-top:64px;overflow-y:auto}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+<div class="stage">
+
+<!-- 1 -->
+<section class="slide cover on" data-color="var(--tunel)">
+  <div class="rule-lines"><i style="background:var(--l1)"></i><i style="background:var(--l2)"></i><i style="background:var(--l5)"></i><i style="background:var(--l4)"></i></div>
+  <div class="eyebrow">Estado del arte · Machine Learning</div>
+  <h1>Operación<br>resiliente ante<br>disrupciones</h1>
+  <p class="lead">Tres lados de un mismo problema: prevenir las fallas, anticipar su efecto en el servicio, recuperar el funcionamiento.</p>
+  <div class="cover-meta">
+    <div>Ámbito<b>Metro de Santiago</b></div>
+    <div>Literatura revisada<b>10+ papers · 2021-2025</b></div>
+    <div>Seleccionados<b>3 papers</b></div>
+    <div>Fase<b>Exploratoria</b></div>
+  </div>
+</section>
+
+<!-- 2 -->
+<section class="slide" data-color="var(--tunel)">
+  <div class="eyebrow">El problema</div>
+  <div class="two">
+    <div>
+      <h2>Las disrupciones<br>se propagan<br>en cadena</h2>
+      <p style="margin-top:1.1em">Cuando algo falla en la red de metro, el impacto se distribuye: los trenes disponibles caen, la demanda se redistribuye hacia rutas que nadie dimensionó, y la operación debe reprogramarse bajo presión y en caliente. En síntesis se opera en forma reactiva.</p>
+      <p style="margin-top:.9em">Así cabe preguntarse si el machine learning puede intervenir en los tres eslabones, y si hay valor real en integrarlos.</p>
+    </div>
+    <div class="three" style="grid-template-columns:1fr 1fr">
+      <div class="stat"><b>2.212.288</b><span>Pasajeros en día laboral, 2025</span></div>
+      <div class="stat"><b>2.948.876</b><span>Récord histórico, 30 abr 2019</span></div>
+      <div class="stat"><b>143</b><span>Estaciones en 7 líneas</span></div>
+      <div class="stat"><b>149 km</b><span>Extensión de la red</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 3 -->
+<section class="slide" data-color="var(--tunel)">
+  <div class="eyebrow">Cómo se descompone</div>
+  <h2>La cadena del quiebre de servicio</h2>
+  <div class="chain">
+    <div class="link" style="--c:var(--l1)">
+      <div class="n">Eslabón 01 · Prevenir</div>
+      <h4>Falla del activo</h4>
+      <p>Un subsistema del tren se degrada sin aviso. El tren sale de servicio.</p>
+    </div>
+    <div class="link" style="--c:var(--l2)">
+      <div class="n">Eslabón 02 · Anticipar</div>
+      <h4>Demanda que se desplaza</h4>
+      <p>Los pasajeros reencaminan sus viajes. Aparecen aglomeraciones en estaciones que ningún modelo de demanda "normal" había previsto.</p>
+    </div>
+    <div class="link" style="--c:var(--l5)">
+      <div class="n">Eslabón 03 · Responder</div>
+      <h4>Recuperación del servicio</h4>
+      <p>Intervalos, retornos cortos, trenes de reserva. Decisiones de alto impacto tomadas en minutos y sin apoyo cuantitativo.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 4 -->
+<section class="slide" data-color="var(--tunel)">
+  <div class="eyebrow">Criterio de selección</div>
+  <div class="two">
+    <div>
+      <h2>Qué se revisó<br>y qué quedó</h2>
+      <p style="margin-top:1em">Se revisaron más de diez trabajos de 2021 a 2025 en predicción de afluencia, mantenimiento predictivo, reprogramación con aprendizaje por refuerzo, propagación de retrasos y visión por computador en estaciones.</p>
+      <p style="margin-top:.9em">De ahí se eligieron tres por dos razones: cubren aristas distintas de la misma cadena y aportan metodologías complementarias.</p>
+    </div>
+    <div>
+      <div class="card hl" style="--c:var(--l4);margin-bottom:1.6em">
+        <h5>Criterios aplicados</h5>
+        <ul>
+          <li>Datos reales de un sistema de metro en operación, no solo simulación</li>
+          <li>Publicación 2021-2025 en venue serio o preprint verificable</li>
+          <li>Método replicable con recursos acotados</li>
+          <li>Aporta una arista distinta, no una variante del mismo modelo</li>
+        </ul>
+      </div>
+      <div class="card" style="--c:var(--gris)">
+        <h5>Familias metodológicas cubiertas</h5>
+        <p>Aprendizaje no supervisado con explicabilidad · inferencia causal · aprendizaje por refuerzo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 -->
+<section class="slide divider" data-color="var(--l1)" style="--c:var(--l1)">
+  <div class="step">01</div>
+  <div class="eyebrow">Arista uno</div>
+  <h2>Prevenir</h2>
+  <p class="lead">Detectar la degradación del activo antes de que se convierta en un tren fuera de servicio.</p>
+</section>
+
+<!-- 6 -->
+<section class="slide" data-color="var(--l1)" style="--c:var(--l1)">
+  <div class="eyebrow">Arista 01 · Mantenimiento predictivo</div>
+  <div class="paper-head">
+    <div class="kicker">Paper 01</div>
+    <h2>Detecting and Explaining Anomalies in the Air Production Unit of a Train</h2>
+    <div class="cite">Davari, Veloso, Ribeiro &amp; Gama (2024) · ACM SAC '24 · doi 10.1145/3605098.3635906<br>Dataset MetroPT · Veloso et al., <i>Scientific Data</i> 9:764 (2022) · Metro do Porto</div>
+  </div>
+  <div class="cards">
+    <div class="card hl">
+      <h5>Contribución</h5>
+      <p>Autoencoder LSTM en línea que detecta anomalías en la unidad de producción de aire del compresor, con explicaciones SHAP que indican qué señal gatilla la alerta.</p>
+      <p style="margin-top:.7em">Datos reales a 1 Hz: 10.979.547 registros, 8 sensores analógicos y 8 digitales más GPS. La variante MetroPT-3 aporta 1.516.948 observaciones con cuatro fugas de aire confirmadas por reportes de mantenimiento.</p>
+    </div>
+    <div class="card">
+      <h5>Limitaciones</h5>
+      <ul>
+        <li>Un solo tren y un solo subsistema: la generalización a puertas, bogies o tracción no está demostrada</li>
+        <li>Sin etiquetas finas más allá de los reportes de falla</li>
+        <li>El alcance llega hasta la detección de anomalía, sin estimación de vida útil remanente</li>
+        <li>En producción, el umbral obliga a transar cobertura contra falsas alarmas</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h5>Posible extensión</h5>
+      <ul>
+        <li>Usar MetroPT como pre-entrenamiento y transferir el pipeline a los subsistemas de mayor impacto en Santiago</li>
+        <li>Agregar estimación de vida útil remanente con incertidumbre calibrada, para programar la intervención en ventana de baja demanda</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 7 -->
+<section class="slide divider dark" data-color="var(--l2)" style="--c:var(--l2)">
+  <div class="step">02</div>
+  <div class="eyebrow">Arista dos</div>
+  <h2 style="color:var(--tunel)">Anticipar</h2>
+  <p class="lead" style="color:rgba(0,0,0,.72)">Ocurrido el incidente, predecir hacia dónde se mueve la demanda antes de que aparezca la aglomeración.</p>
+</section>
+
+<!-- 8 -->
+<section class="slide" data-color="var(--l2)" style="--c:var(--l2)">
+  <div class="eyebrow">Arista 02 · Predicción de afluencia</div>
+  <div class="paper-head">
+    <div class="kicker">Paper 02</div>
+    <h2>Predicting Subway Passenger Flows under Incident Situation with Causality</h2>
+    <div class="cite">Huang, Qiu, Yuan &amp; Yang (2024) · arXiv:2412.06871 · Tongji University</div>
+  </div>
+  <div class="cards">
+    <div class="card hl">
+      <h5>Contribución</h5>
+      <p>Separa el problema en dos etapas: un modelo de predicción origen-destino en condiciones normales, más un modelo del efecto causal del incidente estimado con control sintético y pruebas placebo.</p>
+      <p style="margin-top:.7em">Gana precisión y, sobre todo, interpretabilidad frente a los modelos end-to-end de caja negra: permite explicar el mecanismo por el que un incidente altera cada par origen-destino.</p>
+    </div>
+    <div class="card">
+      <h5>Limitaciones</h5>
+      <ul>
+        <li>Exige una bitácora de incidentes confiable y suficientes eventos históricos</li>
+        <li>El error del modelo normal se arrastra a la predicción final</li>
+        <li>El control sintético necesita estaciones de control comparables no afectadas</li>
+        <li>Escala mal a matrices origen-destino de red completa</li>
+        <li>Los efectos que persisten tras el fin del incidente son difíciles de acotar</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h5>Posible extensión</h5>
+      <ul>
+        <li>Aplicarlo a la red de Santiago cruzando datos bip! con la bitácora de disrupciones de Metro</li>
+        <li>Usar la predicción del efecto causal para dimensionar buses de apoyo ante cierres de tramo, un patrón habitual en la operación local</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 9 -->
+<section class="slide divider" data-color="var(--l5)" style="--c:var(--l5)">
+  <div class="step">03</div>
+  <div class="eyebrow">Arista tres</div>
+  <h2>Responder</h2>
+  <p class="lead">Reoptimizar la operación para recuperar el servicio en el menor tiempo posible.</p>
+</section>
+
+<!-- 10 -->
+<section class="slide" data-color="var(--l5)" style="--c:var(--l5)">
+  <div class="eyebrow">Arista 03 · Reprogramación operacional</div>
+  <div class="paper-head">
+    <div class="kicker">Paper 03</div>
+    <h2>Optimizing Integrated Train Rescheduling Strategies for Diverse Disruption Scenarios Using Reinforcement Learning</h2>
+    <div class="cite">Yin, Liu, Chang, Fu &amp; Wu (2025) · Computers &amp; Industrial Engineering 207:111329<br>doi 10.1016/j.cie.2025.111329</div>
+  </div>
+  <div class="cards">
+    <div class="card hl">
+      <h5>Contribución</h5>
+      <p>Agente de Q-learning que optimiza la reprogramación de itinerarios integrando seis tácticas: operación normal, retención de trenes, retorno corto, marcha en reversa, salida diferida desde cocheras y sus combinaciones.</p>
+      <p style="margin-top:.7em">Introduce un mecanismo de recompensa con funciones primaria y secundaria. En Beijing Metro Línea 19, ante una disrupción de 30 minutos, reduce los retrasos totales de trenes un <b>46,6%</b> y el tiempo de cómputo un <b>13,7%</b> frente a una estrategia de reprogramación única.</p>
+    </div>
+    <div class="card">
+      <h5>Limitaciones</h5>
+      <ul>
+        <li>La validación ocurre en escenarios simulados sobre casos reales, fuera de la operación en vivo</li>
+        <li>La política requiere reentrenamiento ante otra topología o patrón de demanda</li>
+        <li>Restricciones de seguridad y regulatorias complican cualquier despliegue real</li>
+        <li>Alta sensibilidad al diseño de la función de recompensa</li>
+        <li>Q-learning tabular escala con dificultad a redes de mayor tamaño</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h5>Posible extensión</h5>
+      <ul>
+        <li>Adaptar el conjunto de tácticas a la operación de Santiago, incluyendo trenes expresos e inyección de reservas</li>
+        <li>Alimentarlo con la predicción de demanda de la arista 02 para cerrar el lazo predicción → decisión</li>
+        <li>Desplegarlo en modo apoyo a la decisión fuera de línea durante toda la fase de validación</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 11 -->
+<section class="slide" data-color="var(--l4)" style="--c:var(--l4)">
+  <div class="eyebrow">Síntesis</div>
+  <h2>Las tres aristas cierran un lazo</h2>
+  <p style="margin-top:.9em">Los tres tópicos de literatura describen en conjunto un sistema predictivo que actúa como insumo para decisiones operacionales. A través del mantenimiento se reduce la carga.</p>
+  <div class="loop">
+    <div class="node" style="--c:var(--l1)"><b>Prevenir</b><p>Menos fallas de origen significa menos disrupciones que anticipar y menos servicio que recuperar.</p></div>
+    <div class="node" style="--c:var(--l2)"><b>Anticipar</b><p>La predicción de demanda bajo incidente entrega el estado del sistema que el módulo de decisión necesita como entrada.</p></div>
+    <div class="node" style="--c:var(--l5)"><b>Responder</b><p>La reprogramación genera datos de operación bajo estrés que retroalimentan tanto la predicción como los modelos de falla.</p></div>
+  </div>
+  <p class="note">Ninguno de los tres trabajos modela el lazo completo, y ahí queda espacio disponible para una contribución propia.</p>
+</section>
+
+<!-- 12 -->
+<section class="slide" data-color="var(--l4)" style="--c:var(--l4)">
+  <div class="eyebrow">La brecha</div>
+  <div class="two">
+    <div>
+      <h2>Casi nadie ha<br>hecho esto con<br>datos latinoamericanos</h2>
+      <p style="margin-top:1em">La evidencia empírica de esta literatura proviene casi por completo de metros chinos, coreanos y europeos. La transferibilidad a Santiago requiere demostración empírica.</p>
+      <p style="margin-top:.9em">En Chile existe un cuerpo sólido de analítica sobre datos bip!, con matrices origen-destino desagregadas y modelos de elección de ruta, construido desde un enfoque principalmente estadístico.</p>
+    </div>
+    <div>
+      <div class="card hl" style="margin-bottom:1.4em">
+        <h5>Referentes regionales</h5>
+        <ul>
+          <li><b>Medellín, 2025.</b> Autoencoders profundos sobre embeddings TabNet con SHAP para detectar datos de tráfico corruptos. El caso verificado más claro de deep learning en un metro latinoamericano.</li>
+          <li><b>Santiago, 2012 y 2025.</b> Munizaga y Palma estiman matrices OD desde bip!; Arriagada, Guevara y Munizaga modelan elección de ruta con ocho semanas de datos bip!.</li>
+        </ul>
+      </div>
+      <div class="card" style="--c:var(--l2)">
+        <h5>Qué implica</h5>
+        <p>Validar cualquiera de las tres aristas con datos reales de Santiago constituye por sí solo una contribución publicable.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 13 -->
+<section class="slide" data-color="var(--tunel)">
+  <div class="eyebrow">Referencias</div>
+  <h2 style="margin-bottom:.8em">Literatura revisada</h2>
+  <ul class="refs">
+    <li><span>01</span><b>Davari, N., Veloso, B., Ribeiro, R. P. &amp; Gama, J. (2024).</b> Detecting and Explaining Anomalies in the Air Production Unit of a Train. <i>Proceedings of the 39th ACM/SIGAPP Symposium on Applied Computing (SAC '24)</i>. doi 10.1145/3605098.3635906</li>
+    <li><span>02</span><b>Veloso, B., Ribeiro, R. P., Gama, J. &amp; Pereira, P. M. (2022).</b> The MetroPT dataset for predictive maintenance. <i>Scientific Data</i>, 9(1), 764. doi 10.1038/s41597-022-01877-3</li>
+    <li><span>03</span><b>Huang, X., Qiu, S., Yuan, Q. &amp; Yang, C. (2024).</b> Predicting Subway Passenger Flows under Incident Situation with Causality. arXiv preprint arXiv:2412.06871</li>
+    <li><span>04</span><b>Yin, H., Liu, L., Chang, X., Fu, H. &amp; Wu, J. (2025).</b> Optimizing integrated train rescheduling strategies for diverse disruption scenarios using reinforcement learning. <i>Computers &amp; Industrial Engineering</i>, 207, 111329. ISSN 0360-8352. doi 10.1016/j.cie.2025.111329</li>
+    <li><span>05</span><b>Zhao, Y., Ma, Z., Jiang, X. &amp; Koutsopoulos, H. N. (2022).</b> Short-Term Metro Ridership Prediction During Unplanned Events. <i>Transportation Research Record</i>. doi 10.1177/03611981211037553</li>
+    <li><span>06</span><b>Gao, C., Liu, H., Huang, J., Wang, Z., Li, X. &amp; Li, X. (2024).</b> Regularized spatial-temporal graph convolutional networks for metro passenger flow prediction. <i>IEEE Transactions on Intelligent Transportation Systems</i>, 25(9), 11241-11255. doi 10.1109/TITS.2024.3365179</li>
+    <li><span>07</span><b>Huang, H., Mao, J., Kang, L., Lu, W., Zhang, S. &amp; Liu, L. (2024).</b> A dynamic graph deep learning model with multivariate empirical mode decomposition for network-wide metro passenger flow prediction. <i>Computer-Aided Civil and Infrastructure Engineering</i>, 39(17), 2596-2618. doi 10.1111/mice.13214</li>
+    <li><span>08</span><b>Chang, Y., Zong, M., Dang, Y. &amp; Wang, K. (2024).</b> Multi-Step Passenger Flow Prediction for Urban Metro System Based on Spatial-Temporal Graph Neural Network. <i>Applied Sciences</i>, 14(18), 8121. doi 10.3390/app14188121</li>
+    <li><span>09</span><b>Chen, C. et al. (2024).</b> DelayPTC-LLM: Metro Passenger Travel Choice Prediction under Train Delays with Large Language Models. arXiv preprint arXiv:2410.00052</li>
+    <li><span>10</span><b>Almaraz-Rivera, J. G., Cantoral-Ceballos, J. A., Botero, J. F., Muñoz, F. J. &amp; Martinez, B. D. (2025).</b> A Multimodal Learning Approach for Protecting the Metro System of Medellin Colombia Against Corrupted User Traffic Data. <i>Smart Cities</i>, 8, 198. doi 10.3390/smartcities8060198</li>
+    <li><span>11</span><b>Munizaga, M. A. &amp; Palma, C. (2012).</b> Estimation of a disaggregate multimodal public transport origin-destination matrix from passive smartcard data from Santiago, Chile. <i>Transportation Research Part C</i>, 24, 9-18. doi 10.1016/j.trc.2012.01.007</li>
+    <li><span>12</span><b>Arriagada, J., Guevara, C. A. &amp; Munizaga, M. (2025).</b> An experiential learning-based transit route choice model using large-scale smart-card data. <i>Transportation</i>, 52(4), 1543-1568. doi 10.1007/s11116-024-10465-w</li>
+  </ul>
+  <p class="note">Nota sobre las cifras: las mejoras reportadas provienen de casos de estudio en simulación y no constituyen garantías operacionales. Las cifras de afluencia de Metro de Santiago conviene confirmarlas con la fuente interna antes de publicar.<br><br>Esta presentación visual fue hecha con Claude (Anthropic).</p>
+</section>
+
+</div>
+
+<div class="hint">← → navegar · F pantalla completa</div>
+<div class="counter"><b id="cur">01</b> / <span id="tot">13</span></div>
+<nav class="spine" id="spine" aria-label="Navegación de láminas"><div class="wire"></div></nav>
+
+<script>
+(function(){
+  var slides=[].slice.call(document.querySelectorAll('.slide'));
+  var spine=document.getElementById('spine');
+  var cur=document.getElementById('cur');
+  var i=0;
+  document.getElementById('tot').textContent=String(slides.length).padStart(2,'0');
+
+  slides.forEach(function(s,n){
+    var b=document.createElement('button');
+    b.className='stop';
+    b.setAttribute('aria-label','Ir a la lámina '+(n+1));
+    b.style.setProperty('--sc',s.dataset.color||'var(--tunel)');
+    b.innerHTML='<i></i>';
+    b.addEventListener('click',function(){go(n)});
+    spine.appendChild(b);
+  });
+  var stops=[].slice.call(spine.querySelectorAll('.stop'));
+
+  function go(n){
+    if(n<0||n>=slides.length)return;
+    slides[i].classList.remove('on');
+    i=n;
+    slides[i].classList.add('on');
+    stops.forEach(function(s,k){s.classList.toggle('now',k===i)});
+    cur.textContent=String(i+1).padStart(2,'0');
+    document.documentElement.style.setProperty('--anden',
+      slides[i].classList.contains('divider')?(slides[i].dataset.color):'#E4E1D9');
+  }
+
+  function toggleFullscreen(){
+    var el=document.documentElement;
+    if(document.fullscreenElement||document.webkitFullscreenElement){
+      (document.exitFullscreen||document.webkitExitFullscreen).call(document);
+    }else{
+      (el.requestFullscreen||el.webkitRequestFullscreen).call(el);
+    }
+  }
+
+  document.addEventListener('keydown',function(e){
+    if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' '){e.preventDefault();go(i+1)}
+    if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();go(i-1)}
+    if(e.key==='Home')go(0);
+    if(e.key==='End')go(slides.length-1);
+    if(e.key==='f'||e.key==='F'){e.preventDefault();toggleFullscreen()}
+  });
+
+  var x0=null;
+  document.addEventListener('touchstart',function(e){x0=e.touches[0].clientX},{passive:true});
+  document.addEventListener('touchend',function(e){
+    if(x0===null)return;
+    var dx=e.changedTouches[0].clientX-x0;
+    if(Math.abs(dx)>55)go(dx<0?i+1:i-1);
+    x0=null;
+  },{passive:true});
+
+  go(0);
+})();
+</script>
+</body>
+</html>
