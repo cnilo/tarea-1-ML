@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+# pesos y predicciones (grandes); se regeneran con train_hz.py
+repro/runs/*/*.pt
+repro/runs/*/*.npz
+# clon del repositorio oficial: se obtiene con git clone https://github.com/cgao-comp/PMC-GCN.git
+PMC-GCN/
+# informe: fuentes y PDF compilado se mantienen fuera del repositorio de código
+repro/informe/
