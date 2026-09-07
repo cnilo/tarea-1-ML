@@ -1,0 +1,59 @@
+{
+  "args": {
+    "dataset": "HZ",
+    "epochs": 200,
+    "batch_size": 16,
+    "lr": 0.004,
+    "weight_decay": 0.001,
+    "alpha": 5.0,
+    "dropout": 0.2,
+    "time_num": 69,
+    "seq_len": 12,
+    "pre_len": 4,
+    "split_ratio": 0.8,
+    "seed": 1,
+    "device": "mps",
+    "drop_header_row": false,
+    "single_channel": false,
+    "loss": "mse",
+    "kl_impl": "log_target",
+    "eval_every": 1,
+    "out": null
+  },
+  "device": "mps",
+  "torch": "2.14.0",
+  "params_per_net": 245051,
+  "n_train": 1364,
+  "n_test": 330,
+  "max_val": 8737.0,
+  "best_epoch": 192,
+  "best_train_loss": 732975.3173828125,
+  "total_time_s": 2663.6870601177216,
+  "final_test_best_epoch": {
+    "h1": {
+      "MAE": 64.07669067382812,
+      "RMSE": 108.49070739746094,
+      "MAPE": 22.98158073425293
+    },
+    "h2": {
+      "MAE": 60.72193145751953,
+      "RMSE": 99.78340911865234,
+      "MAPE": 19.804304122924805
+    },
+    "h3": {
+      "MAE": 67.8639907836914,
+      "RMSE": 110.87874603271484,
+      "MAPE": 22.757492065429688
+    },
+    "h4": {
+      "MAE": 71.14571380615234,
+      "RMSE": 117.05091094970703,
+      "MAPE": 23.555973052978516
+    },
+    "all": {
+      "MAE": 65.95208740234375,
+      "RMSE": 109.22679901123047,
+      "MAPE": 22.274837493896484
+    }
+  }
+}

@@ -1,0 +1,233 @@
+device: mps | torch 2.14.0
+flow matrix: (1726, 81) max: 8737.0
+train samples: 1364 test samples: 330
+params per network: 245051
+ep   0 loss   117000.6 kl 10678.5232 | test net1 MAE 356.73 RMSE 550.47 MAPE 134.64 | 27s
+ep   1 loss    25245.4 kl 176.1754 | test net1 MAE 290.16 RMSE 504.42 MAPE 112.44 | 52s
+ep   2 loss    22632.7 kl  54.1380 | test net1 MAE 274.29 RMSE 492.46 MAPE 110.58 | 95s
+ep   3 loss    22000.3 kl  22.2635 | test net1 MAE 272.67 RMSE 498.11 MAPE 101.23 | 121s
+ep   4 loss    22000.0 kl  15.2307 | test net1 MAE 273.51 RMSE 475.76 MAPE 132.82 | 147s
+ep   5 loss    21958.5 kl  12.2653 | test net1 MAE 269.13 RMSE 489.46 MAPE 109.24 | 173s
+ep   6 loss    21681.5 kl   5.9953 | test net1 MAE 272.10 RMSE 494.41 MAPE 105.75 | 199s
+ep   7 loss    21765.4 kl   8.0862 | test net1 MAE 272.14 RMSE 477.50 MAPE 128.80 | 233s
+ep   8 loss    21850.2 kl   8.3758 | test net1 MAE 269.85 RMSE 492.55 MAPE 105.89 | 260s
+ep   9 loss    21668.9 kl   4.1225 | test net1 MAE 268.08 RMSE 487.79 MAPE 110.42 | 287s
+ep  10 loss    21587.9 kl   2.4824 | test net1 MAE 269.25 RMSE 490.88 MAPE 107.51 | 314s
+ep  11 loss    21605.7 kl   3.9583 | test net1 MAE 268.32 RMSE 479.51 MAPE 121.68 | 340s
+ep  12 loss    21859.6 kl   5.3894 | test net1 MAE 272.10 RMSE 496.50 MAPE 102.88 | 366s
+ep  13 loss    21771.7 kl   5.7496 | test net1 MAE 268.28 RMSE 477.57 MAPE 124.16 | 392s
+ep  14 loss    21673.2 kl   3.1519 | test net1 MAE 269.73 RMSE 493.47 MAPE 104.56 | 419s
+ep  15 loss    21730.7 kl   3.6731 | test net1 MAE 268.73 RMSE 490.73 MAPE 107.18 | 447s
+ep  16 loss    21691.8 kl   2.3610 | test net1 MAE 268.41 RMSE 489.47 MAPE 108.53 | 473s
+ep  17 loss    21646.4 kl   2.1124 | test net1 MAE 271.64 RMSE 497.83 MAPE 100.66 | 499s
+ep  18 loss    21632.5 kl   2.3215 | test net1 MAE 269.10 RMSE 491.87 MAPE 106.05 | 525s
+ep  19 loss    21600.6 kl   1.8163 | test net1 MAE 270.11 RMSE 494.58 MAPE 103.45 | 552s
+ep  20 loss    21639.8 kl   1.4938 | test net1 MAE 267.36 RMSE 482.43 MAPE 116.76 | 578s
+ep  21 loss    21652.0 kl   1.6606 | test net1 MAE 268.10 RMSE 476.75 MAPE 125.03 | 604s
+ep  22 loss    21638.7 kl   1.1717 | test net1 MAE 267.81 RMSE 487.36 MAPE 110.70 | 630s
+ep  23 loss    21604.9 kl   1.0000 | test net1 MAE 267.86 RMSE 487.65 MAPE 110.38 | 656s
+ep  24 loss    21545.9 kl   1.0082 | test net1 MAE 269.31 RMSE 492.57 MAPE 105.32 | 682s
+ep  25 loss    21643.8 kl   1.1696 | test net1 MAE 268.12 RMSE 488.76 MAPE 109.20 | 708s
+ep  26 loss    21677.6 kl   1.5209 | test net1 MAE 270.21 RMSE 494.88 MAPE 103.13 | 735s
+ep  27 loss    21622.0 kl   0.9349 | test net1 MAE 267.58 RMSE 486.19 MAPE 111.99 | 751s
+ep  28 loss    21574.6 kl   1.1768 | test net1 MAE 278.78 RMSE 509.51 MAPE 92.11 | 765s
+ep  29 loss    21817.1 kl   1.2326 | test net1 MAE 268.17 RMSE 489.17 MAPE 108.63 | 779s
+ep  30 loss    21640.8 kl   0.9493 | test net1 MAE 268.77 RMSE 491.25 MAPE 106.47 | 794s
+ep  31 loss    21682.2 kl   0.8585 | test net1 MAE 269.14 RMSE 492.33 MAPE 105.37 | 807s
+ep  32 loss    21681.0 kl   0.8912 | test net1 MAE 268.43 RMSE 474.98 MAPE 127.53 | 822s
+ep  33 loss    21556.7 kl   0.8151 | test net1 MAE 267.03 RMSE 483.79 MAPE 114.36 | 835s
+ep  34 loss    21609.9 kl   0.9826 | test net1 MAE 270.60 RMSE 496.03 MAPE 101.82 | 849s
+ep  35 loss    21490.4 kl   1.1610 | test net1 MAE 267.77 RMSE 489.59 MAPE 107.04 | 863s
+ep  36 loss    21497.6 kl   1.6812 | test net1 MAE 268.87 RMSE 492.51 MAPE 104.33 | 878s
+ep  37 loss    21397.0 kl   4.0930 | test net1 MAE 264.61 RMSE 484.73 MAPE 105.21 | 892s
+ep  38 loss    21028.3 kl  12.9144 | test net1 MAE 255.58 RMSE 477.32 MAPE 93.78 | 906s
+ep  39 loss    20594.3 kl  25.2718 | test net1 MAE 243.50 RMSE 410.50 MAPE 132.35 | 920s
+ep  40 loss    19809.0 kl  23.0791 | test net1 MAE 231.41 RMSE 421.51 MAPE 78.53 | 934s
+ep  41 loss    19514.8 kl  21.3311 | test net1 MAE 234.79 RMSE 441.70 MAPE 79.26 | 948s
+ep  42 loss    19366.5 kl  25.6161 | test net1 MAE 207.99 RMSE 396.23 MAPE 81.35 | 962s
+ep  43 loss    19069.5 kl  33.0428 | test net1 MAE 194.99 RMSE 362.10 MAPE 89.53 | 976s
+ep  44 loss    18373.6 kl  54.0688 | test net1 MAE 185.53 RMSE 322.37 MAPE 98.39 | 990s
+ep  45 loss    17681.0 kl  45.6166 | test net1 MAE 185.76 RMSE 331.04 MAPE 87.29 | 1005s
+ep  46 loss    16970.9 kl  37.6387 | test net1 MAE 209.89 RMSE 355.97 MAPE 111.43 | 1018s
+ep  47 loss    17080.9 kl  35.0812 | test net1 MAE 188.96 RMSE 329.19 MAPE 89.35 | 1033s
+ep  48 loss    16197.2 kl  39.4439 | test net1 MAE 154.44 RMSE 268.08 MAPE 74.92 | 1047s
+ep  49 loss    14748.3 kl  37.1947 | test net1 MAE 118.50 RMSE 205.96 MAPE 64.30 | 1061s
+ep  50 loss    14048.2 kl  32.2035 | test net1 MAE 117.82 RMSE 206.32 MAPE 55.90 | 1076s
+ep  51 loss    13783.2 kl  25.8176 | test net1 MAE 116.42 RMSE 200.28 MAPE 53.61 | 1089s
+ep  52 loss    14000.6 kl  29.7722 | test net1 MAE 109.30 RMSE 198.35 MAPE 50.36 | 1104s
+ep  53 loss    13780.5 kl  53.4087 | test net1 MAE 207.87 RMSE 367.49 MAPE 97.72 | 1118s
+ep  54 loss    16561.6 kl  57.7721 | test net1 MAE 166.10 RMSE 320.34 MAPE 63.70 | 1132s
+ep  55 loss    15960.2 kl  33.1545 | test net1 MAE 183.05 RMSE 344.18 MAPE 71.74 | 1146s
+ep  56 loss    15252.6 kl  40.3126 | test net1 MAE 163.30 RMSE 318.89 MAPE 71.32 | 1160s
+ep  57 loss    14670.7 kl  31.3135 | test net1 MAE 160.79 RMSE 314.13 MAPE 71.51 | 1174s
+ep  58 loss    14576.1 kl  31.5582 | test net1 MAE 167.77 RMSE 318.61 MAPE 70.47 | 1188s
+ep  59 loss    14919.1 kl  36.0689 | test net1 MAE 175.79 RMSE 329.24 MAPE 71.62 | 1202s
+ep  60 loss    15253.5 kl  34.7400 | test net1 MAE 182.69 RMSE 324.18 MAPE 79.47 | 1216s
+ep  61 loss    14923.1 kl  28.7296 | test net1 MAE 188.76 RMSE 358.31 MAPE 86.22 | 1230s
+ep  62 loss    14555.7 kl  31.8001 | test net1 MAE 156.33 RMSE 305.44 MAPE 69.89 | 1244s
+ep  63 loss    17225.3 kl  20.2348 | test net1 MAE 207.52 RMSE 389.99 MAPE 89.15 | 1258s
+ep  64 loss    16153.0 kl  19.6536 | test net1 MAE 207.30 RMSE 387.43 MAPE 85.73 | 1272s
+ep  65 loss    15654.6 kl  18.9371 | test net1 MAE 171.88 RMSE 328.42 MAPE 70.79 | 1286s
+ep  66 loss    14954.0 kl  16.9097 | test net1 MAE 158.78 RMSE 311.95 MAPE 68.22 | 1301s
+ep  67 loss    14506.9 kl  14.3892 | test net1 MAE 156.13 RMSE 311.96 MAPE 64.91 | 1314s
+ep  68 loss    14291.8 kl  14.5311 | test net1 MAE 160.46 RMSE 314.31 MAPE 68.36 | 1329s
+ep  69 loss    14040.2 kl  16.4352 | test net1 MAE 159.95 RMSE 307.80 MAPE 70.47 | 1342s
+ep  70 loss    13734.9 kl  16.4913 | test net1 MAE 153.44 RMSE 309.15 MAPE 64.27 | 1357s
+ep  71 loss    14163.7 kl  18.2754 | test net1 MAE 153.77 RMSE 306.78 MAPE 65.05 | 1371s
+ep  72 loss    13695.8 kl  13.6270 | test net1 MAE 155.46 RMSE 310.65 MAPE 63.66 | 1385s
+ep  73 loss    13722.6 kl  16.3692 | test net1 MAE 154.86 RMSE 306.46 MAPE 69.83 | 1398s
+ep  74 loss    13621.1 kl  14.9553 | test net1 MAE 152.16 RMSE 302.17 MAPE 68.40 | 1412s
+ep  75 loss    13756.0 kl  14.5584 | test net1 MAE 154.81 RMSE 301.61 MAPE 72.62 | 1426s
+ep  76 loss    13506.3 kl  13.0339 | test net1 MAE 165.80 RMSE 319.07 MAPE 63.70 | 1440s
+ep  77 loss    13327.1 kl  12.5147 | test net1 MAE 152.12 RMSE 307.40 MAPE 62.95 | 1455s
+ep  78 loss    13298.2 kl  10.3888 | test net1 MAE 161.22 RMSE 307.63 MAPE 73.17 | 1469s
+ep  79 loss    13419.2 kl  12.7601 | test net1 MAE 169.91 RMSE 325.31 MAPE 72.57 | 1483s
+ep  80 loss    14175.7 kl  22.1535 | test net1 MAE 156.29 RMSE 303.94 MAPE 70.56 | 1497s
+ep  81 loss    13005.0 kl  16.8838 | test net1 MAE 151.27 RMSE 302.88 MAPE 66.37 | 1511s
+ep  82 loss    12070.4 kl  19.3993 | test net1 MAE 156.49 RMSE 304.33 MAPE 68.95 | 1525s
+ep  83 loss    11629.9 kl  17.0883 | test net1 MAE 154.30 RMSE 304.43 MAPE 67.01 | 1539s
+ep  84 loss    11345.4 kl  17.9102 | test net1 MAE 162.53 RMSE 311.23 MAPE 71.43 | 1553s
+ep  85 loss    11016.1 kl  20.0844 | test net1 MAE 164.34 RMSE 310.13 MAPE 69.47 | 1567s
+ep  86 loss    11044.1 kl  20.6991 | test net1 MAE 152.03 RMSE 306.40 MAPE 64.64 | 1581s
+ep  87 loss    11672.7 kl  35.3760 | test net1 MAE 166.65 RMSE 316.13 MAPE 70.22 | 1595s
+ep  88 loss    10818.9 kl  24.8241 | test net1 MAE 151.98 RMSE 305.26 MAPE 66.10 | 1609s
+ep  89 loss    11052.0 kl  26.8939 | test net1 MAE 150.25 RMSE 296.82 MAPE 72.35 | 1623s
+ep  90 loss    11411.7 kl  29.8252 | test net1 MAE 147.84 RMSE 302.93 MAPE 61.91 | 1636s
+ep  91 loss    11225.1 kl  28.2683 | test net1 MAE 152.31 RMSE 310.34 MAPE 58.97 | 1650s
+ep  92 loss    10424.3 kl  23.8756 | test net1 MAE 152.52 RMSE 299.86 MAPE 71.04 | 1664s
+ep  93 loss    10489.2 kl  23.4506 | test net1 MAE 149.20 RMSE 304.40 MAPE 61.32 | 1678s
+ep  94 loss    10303.7 kl  21.2622 | test net1 MAE 149.05 RMSE 306.59 MAPE 58.59 | 1692s
+ep  95 loss    10190.9 kl  24.2375 | test net1 MAE 158.58 RMSE 314.04 MAPE 62.14 | 1706s
+ep  96 loss    10102.6 kl  22.0340 | test net1 MAE 157.32 RMSE 304.22 MAPE 71.71 | 1720s
+ep  97 loss    10349.0 kl  27.4496 | test net1 MAE 149.71 RMSE 301.41 MAPE 65.30 | 1735s
+ep  98 loss    10415.2 kl  32.1136 | test net1 MAE 149.22 RMSE 302.70 MAPE 62.89 | 1749s
+ep  99 loss    10350.1 kl  24.3679 | test net1 MAE 161.11 RMSE 318.20 MAPE 68.05 | 1763s
+ep 100 loss    10842.4 kl  29.0342 | test net1 MAE 150.51 RMSE 301.35 MAPE 65.32 | 1777s
+ep 101 loss    10074.6 kl  24.5202 | test net1 MAE 148.40 RMSE 301.13 MAPE 65.36 | 1791s
+ep 102 loss    10156.3 kl  23.4208 | test net1 MAE 149.80 RMSE 302.81 MAPE 63.97 | 1805s
+ep 103 loss    10022.9 kl  23.6129 | test net1 MAE 155.96 RMSE 308.13 MAPE 65.50 | 1819s
+ep 104 loss    12077.0 kl  42.8740 | test net1 MAE 150.02 RMSE 306.82 MAPE 58.95 | 1833s
+ep 105 loss    10112.4 kl  27.1058 | test net1 MAE 146.76 RMSE 302.46 MAPE 59.26 | 1847s
+ep 106 loss    10190.5 kl  28.7903 | test net1 MAE 151.98 RMSE 303.26 MAPE 64.41 | 1861s
+ep 107 loss    10120.4 kl  27.0246 | test net1 MAE 152.46 RMSE 305.24 MAPE 62.17 | 1875s
+ep 108 loss    10311.6 kl  28.2371 | test net1 MAE 156.65 RMSE 310.71 MAPE 69.07 | 1889s
+ep 109 loss    12041.1 kl  42.3098 | test net1 MAE 150.74 RMSE 304.37 MAPE 62.86 | 1903s
+ep 110 loss    11018.2 kl  38.6710 | test net1 MAE 151.89 RMSE 298.89 MAPE 71.23 | 1917s
+ep 111 loss    10435.8 kl  36.0611 | test net1 MAE 145.60 RMSE 296.93 MAPE 66.08 | 1932s
+ep 112 loss    10022.8 kl  29.1962 | test net1 MAE 151.86 RMSE 303.55 MAPE 62.04 | 1946s
+ep 113 loss    10750.6 kl  35.3046 | test net1 MAE 173.36 RMSE 314.21 MAPE 76.94 | 1961s
+ep 114 loss    10110.0 kl  28.5495 | test net1 MAE 158.89 RMSE 316.24 MAPE 66.00 | 1975s
+ep 115 loss    10466.5 kl  30.9004 | test net1 MAE 149.70 RMSE 305.45 MAPE 63.91 | 1990s
+ep 116 loss     9784.8 kl  25.6207 | test net1 MAE 146.36 RMSE 298.97 MAPE 65.58 | 2004s
+ep 117 loss     9937.0 kl  25.3301 | test net1 MAE 153.43 RMSE 308.90 MAPE 64.73 | 2018s
+ep 118 loss     9832.5 kl  24.9425 | test net1 MAE 166.25 RMSE 331.03 MAPE 66.88 | 2032s
+ep 119 loss     9885.0 kl  27.3771 | test net1 MAE 157.43 RMSE 320.81 MAPE 63.15 | 2046s
+ep 120 loss     9750.8 kl  22.9375 | test net1 MAE 145.71 RMSE 299.35 MAPE 61.71 | 2060s
+ep 121 loss    11082.0 kl  50.5746 | test net1 MAE 154.70 RMSE 308.77 MAPE 67.71 | 2074s
+ep 122 loss    12428.0 kl  38.1006 | test net1 MAE 150.59 RMSE 310.32 MAPE 59.59 | 2088s
+ep 123 loss    10391.4 kl  34.4437 | test net1 MAE 150.17 RMSE 303.94 MAPE 62.52 | 2102s
+ep 124 loss    10169.9 kl  32.8356 | test net1 MAE 153.45 RMSE 307.59 MAPE 61.39 | 2116s
+ep 125 loss     9911.0 kl  28.5832 | test net1 MAE 146.45 RMSE 303.70 MAPE 58.89 | 2131s
+ep 126 loss    10213.4 kl  32.8417 | test net1 MAE 144.04 RMSE 298.28 MAPE 64.76 | 2145s
+ep 127 loss    10234.8 kl  34.7176 | test net1 MAE 147.19 RMSE 304.06 MAPE 57.86 | 2160s
+ep 128 loss     9782.5 kl  29.9575 | test net1 MAE 145.35 RMSE 300.24 MAPE 62.51 | 2173s
+ep 129 loss     9917.1 kl  28.8780 | test net1 MAE 145.07 RMSE 299.47 MAPE 63.23 | 2187s
+ep 130 loss     9731.1 kl  30.0066 | test net1 MAE 150.99 RMSE 305.17 MAPE 59.20 | 2202s
+ep 131 loss     9732.8 kl  27.5963 | test net1 MAE 145.34 RMSE 289.89 MAPE 73.72 | 2216s
+ep 132 loss     9665.0 kl  26.8543 | test net1 MAE 146.13 RMSE 302.25 MAPE 58.13 | 2230s
+ep 133 loss     9603.4 kl  30.8919 | test net1 MAE 157.84 RMSE 320.32 MAPE 66.58 | 2244s
+ep 134 loss    10661.3 kl  39.2719 | test net1 MAE 143.28 RMSE 297.37 MAPE 61.77 | 2258s
+ep 135 loss     9773.8 kl  31.4049 | test net1 MAE 145.65 RMSE 302.11 MAPE 60.22 | 2272s
+ep 136 loss     9667.3 kl  28.0614 | test net1 MAE 145.54 RMSE 300.58 MAPE 59.84 | 2286s
+ep 137 loss     9747.9 kl  32.4242 | test net1 MAE 143.75 RMSE 299.23 MAPE 61.25 | 2300s
+ep 138 loss    11377.2 kl  40.7790 | test net1 MAE 154.65 RMSE 310.09 MAPE 66.15 | 2314s
+ep 139 loss     9772.2 kl  31.6222 | test net1 MAE 149.51 RMSE 307.49 MAPE 63.02 | 2329s
+ep 140 loss     9582.9 kl  30.6614 | test net1 MAE 150.49 RMSE 309.88 MAPE 57.05 | 2343s
+ep 141 loss     9653.9 kl  28.4670 | test net1 MAE 142.83 RMSE 294.88 MAPE 66.93 | 2357s
+ep 142 loss     9885.2 kl  34.5556 | test net1 MAE 149.86 RMSE 308.62 MAPE 64.55 | 2371s
+ep 143 loss     9433.5 kl  31.3344 | test net1 MAE 142.83 RMSE 296.10 MAPE 63.48 | 2385s
+ep 144 loss     9537.2 kl  28.7516 | test net1 MAE 150.12 RMSE 306.17 MAPE 58.58 | 2399s
+ep 145 loss    10573.3 kl  35.4936 | test net1 MAE 142.79 RMSE 295.67 MAPE 63.04 | 2413s
+ep 146 loss     9985.5 kl  34.7875 | test net1 MAE 145.13 RMSE 301.55 MAPE 61.02 | 2427s
+ep 147 loss     9708.4 kl  28.5378 | test net1 MAE 147.23 RMSE 301.64 MAPE 61.37 | 2441s
+ep 148 loss     9579.9 kl  29.0365 | test net1 MAE 148.13 RMSE 302.58 MAPE 63.68 | 2455s
+ep 149 loss     9607.1 kl  28.7258 | test net1 MAE 144.68 RMSE 298.98 MAPE 60.07 | 2469s
+ep 150 loss     9586.1 kl  31.9251 | test net1 MAE 144.86 RMSE 298.20 MAPE 63.28 | 2484s
+ep 151 loss     9438.0 kl  29.6165 | test net1 MAE 146.12 RMSE 302.42 MAPE 56.11 | 2498s
+ep 152 loss    10091.3 kl  31.0630 | test net1 MAE 143.50 RMSE 298.63 MAPE 60.61 | 2512s
+ep 153 loss     9562.3 kl  32.6096 | test net1 MAE 147.91 RMSE 303.11 MAPE 60.86 | 2526s
+ep 154 loss     9831.4 kl  29.2185 | test net1 MAE 149.03 RMSE 303.68 MAPE 61.66 | 2540s
+ep 155 loss    10070.5 kl  38.5997 | test net1 MAE 158.31 RMSE 315.24 MAPE 67.52 | 2553s
+ep 156 loss    10060.6 kl  34.8437 | test net1 MAE 147.84 RMSE 302.09 MAPE 57.47 | 2567s
+ep 157 loss     9357.7 kl  27.4324 | test net1 MAE 143.27 RMSE 295.84 MAPE 67.26 | 2581s
+ep 158 loss     9650.3 kl  31.8082 | test net1 MAE 143.99 RMSE 297.21 MAPE 62.92 | 2595s
+ep 159 loss     9616.0 kl  30.3393 | test net1 MAE 142.31 RMSE 294.86 MAPE 64.05 | 2609s
+ep 160 loss     9575.8 kl  27.6035 | test net1 MAE 142.95 RMSE 295.21 MAPE 61.78 | 2623s
+ep 161 loss     9571.5 kl  28.2078 | test net1 MAE 142.45 RMSE 297.68 MAPE 60.82 | 2637s
+ep 162 loss     9597.9 kl  31.8049 | test net1 MAE 143.07 RMSE 301.23 MAPE 57.78 | 2651s
+ep 163 loss     9270.6 kl  24.2113 | test net1 MAE 141.22 RMSE 298.63 MAPE 57.24 | 2665s
+ep 164 loss     9366.9 kl  27.4000 | test net1 MAE 142.51 RMSE 299.51 MAPE 58.61 | 2680s
+ep 165 loss     9682.9 kl  32.5077 | test net1 MAE 141.81 RMSE 294.56 MAPE 65.49 | 2695s
+ep 166 loss     9306.1 kl  25.5609 | test net1 MAE 141.95 RMSE 298.67 MAPE 60.55 | 2709s
+ep 167 loss     9389.8 kl  26.0435 | test net1 MAE 145.77 RMSE 299.90 MAPE 62.44 | 2723s
+ep 168 loss     9406.6 kl  26.3351 | test net1 MAE 141.82 RMSE 293.74 MAPE 64.31 | 2737s
+ep 169 loss     9356.3 kl  29.3957 | test net1 MAE 148.93 RMSE 311.64 MAPE 56.68 | 2751s
+ep 170 loss     9313.7 kl  26.7777 | test net1 MAE 144.28 RMSE 300.90 MAPE 59.50 | 2764s
+ep 171 loss     9496.3 kl  31.7233 | test net1 MAE 146.34 RMSE 303.82 MAPE 57.13 | 2779s
+ep 172 loss     9604.2 kl  32.2780 | test net1 MAE 140.43 RMSE 292.72 MAPE 63.41 | 2793s
+ep 173 loss     9577.4 kl  29.8073 | test net1 MAE 150.24 RMSE 303.27 MAPE 65.55 | 2808s
+ep 174 loss     9424.1 kl  29.4502 | test net1 MAE 141.70 RMSE 293.40 MAPE 64.96 | 2822s
+ep 175 loss     9101.7 kl  23.0042 | test net1 MAE 140.59 RMSE 296.86 MAPE 56.28 | 2837s
+ep 176 loss     9411.7 kl  33.0975 | test net1 MAE 139.46 RMSE 293.12 MAPE 62.91 | 2850s
+ep 177 loss     9410.3 kl  28.3600 | test net1 MAE 142.57 RMSE 296.00 MAPE 63.53 | 2864s
+ep 178 loss     9577.1 kl  26.4832 | test net1 MAE 141.03 RMSE 297.67 MAPE 59.44 | 2878s
+ep 179 loss     9880.1 kl  36.2329 | test net1 MAE 149.66 RMSE 296.54 MAPE 69.10 | 2892s
+ep 180 loss     9542.5 kl  34.4028 | test net1 MAE 143.69 RMSE 299.81 MAPE 61.89 | 2906s
+ep 181 loss     9485.7 kl  28.2618 | test net1 MAE 143.21 RMSE 300.64 MAPE 58.98 | 2920s
+ep 182 loss     9216.3 kl  26.3311 | test net1 MAE 143.18 RMSE 300.93 MAPE 56.99 | 2935s
+ep 183 loss     9836.9 kl  34.7541 | test net1 MAE 144.97 RMSE 299.14 MAPE 64.33 | 2948s
+ep 184 loss     9388.0 kl  29.0981 | test net1 MAE 144.39 RMSE 297.90 MAPE 61.60 | 2962s
+ep 185 loss     9209.6 kl  26.7188 | test net1 MAE 145.94 RMSE 303.67 MAPE 53.68 | 2976s
+ep 186 loss     9317.6 kl  28.0353 | test net1 MAE 141.45 RMSE 298.08 MAPE 59.94 | 2990s
+ep 187 loss     9340.1 kl  25.9171 | test net1 MAE 146.72 RMSE 303.27 MAPE 59.82 | 3005s
+ep 188 loss     9291.5 kl  29.6514 | test net1 MAE 140.71 RMSE 297.31 MAPE 60.94 | 3019s
+ep 189 loss     9726.2 kl  30.1048 | test net1 MAE 144.12 RMSE 302.95 MAPE 56.06 | 3033s
+ep 190 loss     9330.1 kl  30.8413 | test net1 MAE 138.99 RMSE 297.79 MAPE 56.48 | 3047s
+ep 191 loss     9398.9 kl  26.7655 | test net1 MAE 143.39 RMSE 297.77 MAPE 62.42 | 3061s
+ep 192 loss     9117.0 kl  26.1310 | test net1 MAE 139.88 RMSE 294.39 MAPE 61.64 | 3075s
+ep 193 loss     9262.6 kl  27.0362 | test net1 MAE 138.23 RMSE 295.18 MAPE 58.04 | 3088s
+ep 194 loss     9339.4 kl  25.2012 | test net1 MAE 161.20 RMSE 317.07 MAPE 66.32 | 3102s
+ep 195 loss     9475.8 kl  28.0700 | test net1 MAE 141.65 RMSE 300.73 MAPE 56.82 | 3116s
+ep 196 loss     9443.8 kl  30.3824 | test net1 MAE 142.36 RMSE 297.58 MAPE 62.31 | 3130s
+ep 197 loss     9173.6 kl  26.7663 | test net1 MAE 144.29 RMSE 300.68 MAPE 58.14 | 3144s
+ep 198 loss     9079.1 kl  30.7099 | test net1 MAE 138.89 RMSE 290.77 MAPE 65.54 | 3158s
+ep 199 loss    10784.8 kl  46.0875 | test net1 MAE 157.75 RMSE 311.77 MAPE 70.59 | 3172s
+
+best epoch: 198 | total time: 52.9 min
+{
+  "h1": {
+    "MAE": 96.84162139892578,
+    "RMSE": 160.68167114257812,
+    "MAPE": 64.01446533203125
+  },
+  "h2": {
+    "MAE": 297.7003173828125,
+    "RMSE": 531.7447509765625,
+    "MAPE": 81.88246154785156
+  },
+  "h3": {
+    "MAE": 72.82463073730469,
+    "RMSE": 105.31392669677734,
+    "MAPE": 56.555442810058594
+  },
+  "h4": {
+    "MAE": 88.18287658691406,
+    "RMSE": 136.1150360107422,
+    "MAPE": 59.69236373901367
+  },
+  "all": {
+    "MAE": 138.88735961914062,
+    "RMSE": 290.7702941894531,
+    "MAPE": 65.53617858886719
+  }
+}

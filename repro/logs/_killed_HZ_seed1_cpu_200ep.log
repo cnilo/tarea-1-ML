@@ -1,0 +1,10 @@
+device: cpu | torch 2.14.0
+flow matrix: (1726, 81) max: 8737.0
+train samples: 1364 test samples: 330
+params per network: 245051
+ep   0 loss 108716888.8 kl 15714.1232 | test net1 MAE 301.21 RMSE 488.91 MAPE 147.40 | 67s
+ep   1 loss 22090877.2 kl 4524.5515 | test net1 MAE 307.17 RMSE 463.44 MAPE 187.18 | 141s
+ep   2 loss 19743091.9 kl 3276.7444 | test net1 MAE 263.57 RMSE 441.41 MAPE 138.60 | 216s
+ep   3 loss 17471110.2 kl 2976.2206 | test net1 MAE 294.92 RMSE 396.93 MAPE 199.61 | 291s
+ep   4 loss 15672387.8 kl 2625.1733 | test net1 MAE 231.92 RMSE 365.22 MAPE 137.84 | 365s
+ep   5 loss 13250722.2 kl 2718.1195 | test net1 MAE 206.93 RMSE 340.55 MAPE 117.97 | 440s
