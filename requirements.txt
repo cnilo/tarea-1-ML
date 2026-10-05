@@ -6,3 +6,4 @@ scipy
 matplotlib
 typst
 pymupdf
+holidays  # opcional: feriados automáticos ('auto:CL') para Metro de Santiago

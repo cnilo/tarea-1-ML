@@ -9,3 +9,6 @@ repro/runs/*/*.npz
 PMC-GCN/
 # informe: fuentes y PDF compilado se mantienen fuera del repositorio de código
 repro/informe/
+# Tarea 2: informe fuera del repo y pesos que se regeneran con t2/train_gcn.py
+t2/informe/
+t2/runs/**/*.pt
