@@ -59,3 +59,71 @@ que el código original lee como datos), `--eval_every N`.
 
 MacBook Pro, Apple M5 Pro (15 núcleos: 5 rendimiento + 10 eficiencia), 24 GB RAM, macOS 26.6.2,
 Python 3.14.3, PyTorch 2.14.0 (backend MPS). Sin GPU NVIDIA.
+
+---
+
+# Tarea 2 · Referencia estacional por tipo de día (`t2/`)
+
+**Pregunta.** ¿Entregar a PMR-GCN la referencia estacional por tipo de día (el flujo del mismo intervalo en el
+último día comparable: laboral, sábado, domingo o festivo), como canal de entrada y como base de una salida
+residual, reduce su MAE de predicción por estación a 15–60 min en al menos un 10 %, y lo deja por debajo del
+predictor ingenuo que usa esa misma referencia?
+
+El destino de la investigación es **Metro de Santiago**. Mientras no hay datos de Santiago, el estudio se corre
+como piloto en el metro de Hangzhou (el único dataset que distribuye el código oficial). El código no tiene nada
+fijo de Hangzhou: todo lo específico de un metro vive en `t2/datasets/<nombre>.json`.
+
+## Archivos
+
+```
+t2/
+  datasets/
+    hangzhou.json              configuración del piloto
+    santiago.plantilla.json    plantilla para Metro de Santiago (copiar como santiago.json)
+  common.py      clase Dataset: lectura, calendario, tipos de día, feriados, partición, ventanas, métricas
+  linear.py      predictores ingenuos y regresión ridge por estación (con y sin referencia)
+  train_gcn.py   PMR-GCN oficial, variantes base y ref (2 canales + salida residual)
+  analyze.py     tabla principal, intervalos de confianza, figuras y macros LaTeX
+  run_all.sh     corre todo para un dataset
+  runs/<dataset>/      predicciones y métricas por corrida (los pesos .pt no se versionan)
+  results/<dataset>/   summary.json, figuras y numeros.tex
+  logs/<dataset>/      salida de cada corrida
+```
+
+## Ejecución
+
+Requiere el clon de `PMC-GCN/` en la raíz (ver arriba) y las dependencias de `requirements.txt`.
+
+```bash
+bash t2/run_all.sh hangzhou                            # todo: ~1 h 40 min en Apple M5 Pro (MPS)
+# o por partes, desde t2/:
+python linear.py    --dataset hangzhou                 # ingenuos + ridge (segundos)
+python train_gcn.py --dataset hangzhou --variant base --seed 0   # PMR-GCN sin referencia (~33 min)
+python train_gcn.py --dataset hangzhou --variant ref  --seed 0   # PMR-GCN con referencia (~33 min)
+python analyze.py   --dataset hangzhou                 # resultados en t2/results/hangzhou
+```
+
+## Migrar a Metro de Santiago
+
+1. **Datos de flujo** (`flujo.csv`): una fila por intervalo de 15 minutos, días completos y consecutivos en orden
+   cronológico, y una columna por estación con el número de validaciones (entradas) en ese intervalo. Primera
+   fila con los nombres de estación. Se usa una grilla fija para todos los días (por ejemplo 05:30 a 23:30 = 72
+   intervalos); los intervalos sin servicio van con 0. No debe haber valores faltantes.
+2. **Topología** (`adyacencia.csv`): matriz N × N de 0/1 sin cabecera, con un 1 entre estaciones consecutivas de
+   una misma línea; las estaciones de combinación conectan ambas líneas. Mismo orden que las columnas de flujo.
+3. **Configuración**: copiar `t2/datasets/santiago.plantilla.json` como `santiago.json` y completar rutas, fecha de
+   inicio y partición. La plantilla trae tres tipos de día (laboral, sábado, domingo/festivo) y feriados chilenos
+   automáticos (`"auto:CL"`, requiere `pip install holidays`); ambos son configurables.
+4. **Correr**: `bash t2/run_all.sh santiago`. Los resultados quedan en `t2/results/santiago/`.
+
+Recomendaciones para el período: al menos 8 a 10 semanas, para tener varios lunes, sábados y feriados en cada
+partición, y un test de dos semanas completas o más. Los datos deben ser agregados por estación e intervalo;
+no se necesita ni conviene usar información de tarjetas individuales.
+
+## Cambios de protocolo respecto a la Tarea 1
+
+- Se descarta la fila de cabecera de `HZ_flow.csv` (en el JSON: `"cabecera": true`).
+- Partición cronológica por días: en Hangzhou, 17 de entrenamiento, 3 de validación, 5 de test (lunes 21 a viernes 25).
+- Escala de normalización calculada sólo con entrenamiento.
+- Checkpoint elegido por MAE en validación, tres semillas por variante.
+- Todas las variantes se evalúan en las mismas ventanas de test (342 en Hangzhou).
