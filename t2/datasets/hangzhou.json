@@ -1,0 +1,21 @@
+{
+  "nombre": "Metro de Hangzhou",
+  "flujo": "PMC-GCN/Dataset/HZ/HZ_flow.csv",
+  "adyacencia": "PMC-GCN/Dataset/HZ/HZ_adj.csv",
+  "cabecera": true,
+  "fecha_inicio": "2019-01-01",
+  "intervalos_por_dia": 69,
+  "minutos_por_intervalo": 15,
+  "particion_dias": {"train": 17, "val": 3, "test": 5},
+  "ventana": 12,
+  "horizonte": 4,
+  "tipos_de_dia": {
+    "laboral": ["lun", "mar", "mie", "jue", "vie"],
+    "no_laboral": ["sab", "dom"]
+  },
+  "feriados": ["2019-01-01"],
+  "tipo_feriado": "no_laboral",
+  "percentil_peak": 90,
+  "referencia_externa": {"etiqueta": "PMR-GCN según el paper", "mae": 41.54},
+  "_notas": "Datos del repositorio oficial de PMR-GCN. La primera fila del CSV (1..81) es una cabecera que el código original leía como datos. El 1 de enero se trata como no laboral porque su perfil horario se parece al de fin de semana (correlación 0.92)."
+}

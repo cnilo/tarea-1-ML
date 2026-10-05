@@ -1,0 +1,30 @@
+{
+  "nombre": "Metro de Santiago",
+  "flujo": "datos/santiago/flujo.csv",
+  "adyacencia": "datos/santiago/adyacencia.csv",
+  "cabecera": true,
+  "fecha_inicio": "AAAA-MM-DD",
+  "intervalos_por_dia": 72,
+  "minutos_por_intervalo": 15,
+  "particion_dias": {"train": 42, "val": 7, "test": 14},
+  "ventana": 12,
+  "horizonte": 4,
+  "tipos_de_dia": {
+    "laboral": ["lun", "mar", "mie", "jue", "vie"],
+    "sabado": ["sab"],
+    "domingo_festivo": ["dom"]
+  },
+  "feriados": "auto:CL",
+  "tipo_feriado": "domingo_festivo",
+  "percentil_peak": 90,
+  "referencia_externa": null,
+  "_notas": [
+    "Plantilla: copiar como santiago.json y completar rutas, fecha de inicio y partición.",
+    "flujo: CSV con una fila por intervalo (en orden cronológico, días completos y consecutivos) y una columna por estación. Con cabecera=true la primera fila son los nombres de estación.",
+    "adyacencia: CSV N x N (0/1) sin cabecera, mismas estaciones y mismo orden que las columnas de flujo.",
+    "intervalos_por_dia: grilla fija para todos los días (por ejemplo 05:30 a 23:30 = 72 intervalos de 15 min). Los intervalos sin servicio van con 0, aunque el horario cambie según el tipo de día.",
+    "feriados: lista de fechas 'AAAA-MM-DD' o 'auto:CL' (requiere el paquete holidays). Los feriados se asignan a tipo_feriado.",
+    "tipos_de_dia: se pueden definir dos o más; la referencia estacional usa el último día anterior del mismo tipo.",
+    "particion_dias: días consecutivos para train, val y test, en ese orden; conviene que test tenga al menos dos semanas completas."
+  ]
+}
